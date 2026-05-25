@@ -1,0 +1,29 @@
+INTRODUCTION
+----------
+A backend service where users:
+
+DATABASE SCHEMA
+----------
+user
+- id
+- email
+- hashed_password
+- create_at
+sessions
+- id
+- user_id
+- expires_at
+documents
+- id
+- session_id
+- filename
+- upload_at
+chunk
+- id
+- document_id
+- content
+- embedding (vector)
+
+
+
+

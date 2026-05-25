@@ -1,0 +1,100 @@
+**Phase 1 — Foundation**
+1. `.env`
+2. `core/config.py`
+3. `core/database.py`
+
+**Phase 2 — Models**
+4. `models/user.py` OK
+5. `models/document.py` OK
+6. `models/qa_response.py`
+
+**Phase 3 — Alembic**
+7. `alembic init`
+8. `alembic/env.py` — connect to your models
+9. `alembic revision --autogenerate`
+10. `alembic upgrade head`
+
+**Phase 4 — Schemas**
+11. `schemas/user.py`
+12. `schemas/document.py`
+13. `schemas/session.py`
+14. `schemas/qa.py`
+
+**Phase 5 — Security & Core**
+15. `core/security.py`
+16. `core/dependencies.py`
+
+**Phase 6 — Services**
+17. `services/document.py` — PyPDF extract + chunking
+18. `services/embeddings.py` — OpenAI embeddings
+19. `services/pinecone.py` — upsert, query, delete namespace
+20. `services/rag.py` — full RAG chain
+
+**Phase 7 — Routers**
+21. `routers/auth.py`
+22. `routers/users.py`
+23. `routers/documents.py`
+24. `routers/sessions.py`
+25. `routers/qa.py`
+26. `routers/admin.py`
+
+**Phase 8 — Entry point**
+27. `main.py`
+
+**Phase 9 — Finalize**
+28. `pip freeze > requirements.txt`
+29. Alembic final migrations check
+30. `Dockerfile` + `docker-compose.yml`
+
+Create a new database with password
+psql -U postgres
+CREATE DATABASE docai_db;
+CREATE USER portfolio_user WITH PASSWORD 'yournewpassword';
+GRANT ALL PRIVILEGES ON DATABASE docai_db TO docai_user;
+\q
+
+CREATE DATABASE docai_db;
+
+Change password
+psql -U postgres
+postgres password: password257
+
+GRANT ALL PRIVILEGES ON DATABASE docai_db TO docai_user;
+GRANT ALL ON SCHEMA public TO docai_user;
+ALTER DATABASE docai_db OWNER TO docai_user;
+\q
+ALTER USER docai_user WITH PASSWORD 'pwd257ai';
+
+Alembic
+alembic init alembic
+Configure alembic/env.py
+1. Where is your database — it needs to read your DATABASE_URL from config.py instead of the default
+hardcoded value in alembic.ini
+2. Where are your models — it needs to import your Base and all your models so it can compare them
+to the current database state and generate the right migration
+target_metadata = Base.metadata
+alembic revision --autogenerate -m "initial tables"
+alembic upgrade head
+
+3. alembic revision --autogenerate -m "add workspaces"
+alembic upgrade head
+psql -U docai_user -d docai_db
+\dt
+
+Schemas
+schemas/user.py — Pydantic models for user data validation:
+* UserCreate — what the client sends to register (email, username, password)
+* UserResponse — what the API returns (never the password)
+* UserLogin — what the client sends to login
+schemas/document.py — Pydantic models for document operations:
+* DocumentResponse — what the API returns after upload (filename, status, pinecone_namespace)
+schemas/qa.py — Pydantic models for the RAG question/answer:
+* QARequest — what the client sends (question + document_id)
+* QAResponse — what the API returns (question + answer)
+
+Projects architecture
+User (1)
+└── Workspace (many)
+    ├── Documents (many)
+    └── QAResponses (many)
+
