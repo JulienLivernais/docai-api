@@ -1,4 +1,4 @@
-DOCUMENT INTELLIGENCE API - DocAI API
+DOCUMENT INTELLIGENCE API - DocAI API (in progress)
 ----------
 A backend service that allows users to upload PDF documents, organize them into workspaces,
 and ask questions about them using AI semantic search and LLM responses.
@@ -30,46 +30,46 @@ STACK
 
 DATABASE
 ----------
-**users**
+users
 - id, username, email, hashed_password, is_admin, is_active, created_at
 
-**workspaces**
+workspaces
 - id, name, pinecone_namespace, user_id, created_at, updated_at
 
-**documents**
+documents
 - id, filename, file_path, content, workspace_id, created_at
 
-**qa_responses**
+qa_responses
 - id, question, answer, workspace_id, created_at
 
 API
 ----------
-**Auth**
+Auth
 - POST /auth/register
 - POST /auth/login
 - POST /auth/refresh
 
-**Users**
+Users
 - GET /users/me
 - PATCH /users/me
 - DELETE /users/me
 
-**Workspaces**
+Workspaces
 - GET /workspaces
 - POST /workspaces
 - PATCH /workspaces/{id}
 - DELETE /workspaces/{id}
 
-**Documents**
+Documents
 - POST /documents/upload
 - GET /documents
 - DELETE /documents/{id}
 
-**QA**
+QA
 - POST /qa/ask
 - GET /qa/history
 
-**Admin**
+Admin
 - GET /admin/users
 - DELETE /admin/users/{id}
 
