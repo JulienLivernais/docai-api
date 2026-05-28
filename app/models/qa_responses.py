@@ -5,8 +5,10 @@ from typing import TYPE_CHECKING
 from datetime import datetime, timezone
 from sqlalchemy import DateTime
 
+
 if TYPE_CHECKING:
     from app.models.workspaces import Workspace
+
 
 class QAResponse(Base):
     __tablename__ = 'qa_responses'
