@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def ask_and_get_answer(vector_store, query):
+async def ask_and_get_answer(vector_store, query):
     llm = ChatOpenAI(
         model='gpt-4o-mini',
         temperature=0.5,
@@ -29,7 +29,6 @@ def ask_and_get_answer(vector_store, query):
     Question: {question}
     """)
 
-    # Retrieve and format docs explicitly
     docs = retriever.invoke(query)
     context = "\n\n".join([doc.page_content for doc in docs])
 
@@ -37,5 +36,5 @@ def ask_and_get_answer(vector_store, query):
 
     logger.info(f"Retrieved {len(docs)} chunks for query: {query}")
 
-    return chain.invoke({"context": context, "question": query})
+    return await chain.ainvoke({"context": context, "question": query})
 
