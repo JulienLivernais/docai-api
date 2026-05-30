@@ -5,7 +5,7 @@ class QABase(BaseModel):
     question: str = Field(...)
 
 class QACreate(QABase):
-    pass
+    workspace_id: int
 
 class QAResponse(QABase):
     id: int

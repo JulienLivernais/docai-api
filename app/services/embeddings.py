@@ -53,6 +53,20 @@ def insert_or_fetch_embeddings(index_name, chunks):
     return vector_store
 
 
+def get_vector_store(index_name: str, namespace: str):
+    pc = pinecone.Pinecone(api_key=settings.PINECONE_API_KEY)
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        dimensions=1536,
+        api_key=settings.OPENAI_API_KEY
+    )
+    return PineconeVectorStore.from_existing_index(
+        index_name=index_name,
+        embedding=embeddings,
+        namespace=namespace
+    )
+
+
 def delete_pinecone_namespace(index_name: str, namespace: str) -> None:
     pc = pinecone.Pinecone(api_key=settings.PINECONE_API_KEY)
     index = pc.Index(index_name)
