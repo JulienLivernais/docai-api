@@ -29,11 +29,13 @@ def test_update_workspace(auth_client):
     assert response.status_code == 200
     assert response.json()["name"] == "Updated Name"
 
+
 def test_delete_workspace(auth_client):
     created = auth_client.post("/workspaces/", json={"name": "My Workspace"})
     workspace_id = created.json()["id"]
     response = auth_client.delete(f"/workspaces/{workspace_id}")
     assert response.status_code == 204
+
 
 def test_get_workspace_not_found(auth_client):
     response = auth_client.get("/workspaces/999")
