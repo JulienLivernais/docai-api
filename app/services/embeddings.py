@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 embeddings = OpenAIEmbeddings(
     model="text-embedding-3-small",
     dimensions=1536,
-    api_key=settings.OPENAI_API_KEY
+    api_key=settings.OPENAI_KEY
 )
 
 

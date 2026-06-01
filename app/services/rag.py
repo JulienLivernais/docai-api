@@ -13,7 +13,7 @@ async def ask_and_get_answer(vector_store, query):
         model='gpt-4o-mini',
         temperature=0.5,
         max_tokens=500,
-        api_key=settings.OPENAI_API_KEY
+        api_key=settings.OPENAI_KEY
     )
 
     retriever = vector_store.as_retriever(

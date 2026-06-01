@@ -49,14 +49,25 @@ async def ask(question: QACreate,
 async def get_qa_history(workspace_id: int,
                          current_user: User = Depends(get_current_user),
                          db: Session = Depends(get_db)):
-    pass
+    workspace = db.query(Workspace).filter(Workspace.id == workspace_id,
+                                           Workspace.user_id == current_user.id).first()
+    if not workspace:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Workspace not found")
+    return db.query(QAResponseModel).filter(QAResponseModel.workspace_id == workspace_id).all()
 
 
 @router.delete("/history/{workspace_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_ask(workspace_id: int,
+async def delete_qa_history(workspace_id: int,
                      current_user: User = Depends(get_current_user),
                      db: Session = Depends(get_db)):
-    pass
+    workspace = db.query(Workspace).filter(Workspace.id == workspace_id,
+                                           Workspace.user_id == current_user.id).first()
+    if not workspace:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Workspace not found")
+    db.query(QAResponseModel).filter(QAResponseModel.workspace_id == workspace_id).delete()
+    db.commit()
+
+
 
 
 

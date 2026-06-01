@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from app.core.config import settings
 from fastapi import HTTPException, status
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 # hashed_password in database
 def hash_password(password: str) -> str:
