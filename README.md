@@ -1,4 +1,4 @@
-DOCUMENT INTELLIGENCE API - DocAI API (in progress)
+DocAI API (Document Intelligence API)
 ----------
 A backend service that allows users to upload PDF documents, organize them into workspaces,
 and ask questions about them using AI semantic search and LLM responses.
@@ -27,6 +27,7 @@ STACK
 * OAuth2
 * LangChain
 * Pinecone
+* Docker
 
 DATABASE
 ----------
@@ -61,9 +62,9 @@ Workspaces
 - DELETE /workspaces/{id}
 
 Documents
-- POST /documents/upload
-- GET /documents
-- DELETE /documents/{id}
+- POST /documents/{workspace_id}/upload
+- GET /documents/{workspace_id}
+- DELETE /documents/{document_id}
 
 QA
 - POST /qa/ask
@@ -71,9 +72,34 @@ QA
 
 Admin
 - GET /admin/users
+- GET /users/by-email
+- GET /users/by-username
+- GET /users/{user_id}
 - DELETE /admin/users/{id}
 
-SETUP
+ADMIN
+----------
+Create admin account: python -m scripts.create_admin
+docker compose exec app python -m scripts.create_admin
+
+ENVIRONMENT VARIABLES
+----------
+DATABASE_URL
+JWT_SECRET_KEY
+ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES
+REFRESH_TOKEN_EXPIRE_DAYS
+OPENAI_KEY
+PINECONE_API_KEY
+PINECONE_INDEX_NAME
+PINECONE_ENVIRONMENT
+SUPERADMIN_EMAIL
+SUPERADMIN_PASSWORD
+POSTGRES_USER
+POSTGRES_PASSWORD
+POSTGRES_DB
+
+SETUP IN LOCAL
 ----------
 1. Clone the repository
 2. Create a virtual environment and activate it
@@ -84,8 +110,21 @@ SETUP
 7. Start the server: `uvicorn app.main:app --reload`
 8. Open API docs: `http://localhost:8000/docs`
 
+
+SETUP WITH DOCKER
+----------
+Requirements: Docker and Docker Compose installed on your machine.
+
+1. Clone the repository: git clone https://github.com/JulienLivernais/docai-api
+2. Navigate to the project: cd docai-api
+3. Copy the environment file and fill in the values: cd .env.examples to .env
+4. Build and start the containers: docker compose up --build
+5. Run database migrations: docker compose exec app alembic upgrade head
+6. Create the admin account: docker compose exec app python -m scripts.create_admin
+7. Open API docs: http://localhost:8000/docs
+8. Stop the containers when done: docker compose down
+
 NOTES
 ----------
 This API is a portfolio project demonstrating backend development with AI integration, including authentication,
 vector search, and RAG pipeline.
-
