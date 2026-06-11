@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     PINECONE_INDEX_NAME: str
     PINECONE_ENVIRONMENT: str
 
+    SUPERADMIN_USERNAME: str
+    SUPERADMIN_EMAIL: str
+    SUPERADMIN_PASSWORD: str
+
 # noinspection PyArgumentList
 settings = Settings()
 

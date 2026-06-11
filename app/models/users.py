@@ -5,10 +5,8 @@ from typing import TYPE_CHECKING
 from datetime import datetime, timezone
 from sqlalchemy import DateTime
 
-
 if TYPE_CHECKING:
     from app.models.workspaces import Workspace
-
 
 class User(Base):
     __tablename__ = 'users'
@@ -25,10 +23,12 @@ class User(Base):
     )
 
     workspaces: Mapped[list["Workspace"]] = relationship(
+        "Workspace",
         back_populates="user",
         cascade="all, delete, delete-orphan",
     )
 
+from app.models.workspaces import Workspace
 
 
 

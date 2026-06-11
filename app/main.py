@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from app.routers import admin, auth, documents, qa, users, workspaces
+from app.models import User, Workspace, Document, QAResponse
+
+
 
 app = FastAPI(
     title="DocAI API",
     description="AI-powered document Q&A backend with RAG pipeline",
     version="1.0.0"
 )
+
 
 app.include_router(admin.router)
 app.include_router(auth.router)

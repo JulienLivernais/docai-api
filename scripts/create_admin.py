@@ -15,7 +15,7 @@ def create_admin():
         return
 
     admin = User(
-        username="admin",
+        username=settings.SUPERADMIN_USERNAME,
         email=settings.SUPERADMIN_EMAIL,
         hashed_password=hash_password(settings.SUPERADMIN_PASSWORD),
         is_admin=True
