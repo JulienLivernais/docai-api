@@ -1,4 +1,4 @@
-DocAI API (Document Intelligence API)
+DocAI API
 ----------
 A backend service that allows users to upload PDF documents, organize them into workspaces,
 and ask questions about them using AI semantic search and LLM responses.
@@ -79,8 +79,8 @@ Admin
 
 ADMIN
 ----------
-Create admin account: python -m scripts.create_admin
-docker compose exec app python -m scripts.create_admin
+- Create admin account: python -m scripts.create_admin
+- docker compose exec app python -m scripts.create_admin
 
 SETUP IN LOCAL
 ----------
