@@ -8,12 +8,12 @@ FEATURES
 - Register and login with JWT authentication (access + refresh tokens)
 - Secure password hashing with bcrypt
 - OAuth2 password flow
-- Role-based access control (user / admin)
+- RBAC (user / admin)
 - Create and manage workspaces
 - Upload multiple PDF documents per workspace
 - Automatic text extraction and chunking
 - Semantic search using Pinecone vector database
-- AI-powered question answering using OpenAI and LangChain RAG pipeline
+- AI-powered question answering using OpenAI Key and LangChain RAG pipeline
 
 STACK
 ----------
@@ -45,23 +45,23 @@ qa_responses
 
 API
 ----------
-Auth
+auth
 - POST /auth/register
 - POST /auth/login
 - POST /auth/refresh
 
-Users
+users
 - GET /users/me
 - PATCH /users/me
 - DELETE /users/me
 
-Workspaces
+workspaces
 - GET /workspaces
 - POST /workspaces
 - PATCH /workspaces/{id}
 - DELETE /workspaces/{id}
 
-Documents
+documents
 - POST /documents/{workspace_id}/upload
 - GET /documents/{workspace_id}
 - DELETE /documents/{document_id}
@@ -70,7 +70,7 @@ QA
 - POST /qa/ask
 - GET /qa/history
 
-Admin
+admin
 - GET /admin/users
 - GET /users/by-email
 - GET /users/by-username
@@ -91,13 +91,11 @@ SETUP IN LOCAL
 5. Create the PostgreSQL database
 6. Run migrations: `alembic upgrade head`
 7. Start the server: `uvicorn app.main:app --reload`
-8. Open API docs: `http://localhost:8000/docs`
+8. Open swagger API docs: `http://localhost:8000/docs`
 
 
 SETUP WITH DOCKER
 ----------
-Requirements: Docker and Docker Compose installed on your machine.
-
 1. Clone the repository: git clone https://github.com/JulienLivernais/docai-api
 2. Navigate to the project: cd docai-api
 3. Copy the environment file and fill in the values: cd .env.examples to .env
