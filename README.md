@@ -93,7 +93,6 @@ SETUP IN LOCAL
 7. Start the server: `uvicorn app.main:app --reload`
 8. Open swagger API docs: `http://localhost:8000/docs`
 
-
 SETUP WITH DOCKER
 ----------
 1. Clone the repository: git clone https://github.com/JulienLivernais/docai-api
@@ -104,8 +103,3 @@ SETUP WITH DOCKER
 6. Create the admin account: docker compose exec app python -m scripts.create_admin
 7. Open API docs: http://localhost:8000/docs
 8. Stop the containers when done: docker compose down
-
-NOTES
-----------
-This API is a portfolio project demonstrating backend development with AI integration, including authentication,
-vector search, and RAG pipeline.
