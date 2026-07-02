@@ -11,8 +11,7 @@ Swagger UI: https://docai-api-production-2a53.up.railway.app/docs
 - Register your own account via POST /auth/register, then connect via POST /auth/login (use your email as username).
 - Click "Try it out" to test.
 
-Admin accounts are created via: python -m scripts.create_admin), 
-not through the API (this is intentional, to keep admin creation restricted to the project owner).
+Admin accounts are created with: python -m scripts.create_admin
 
 WHY A CUSTOM RAG PIPELINE
 ----------
@@ -23,8 +22,8 @@ WHY A CUSTOM RAG PIPELINE
 
 EXAMPLE
 ----------
-Tested with a public domain article: 
-- "The-French-Hood-Festival-collegium.pdf" (The French Hood – what it is and what it is not)
+Tested with a public domain article: "The-French-Hood-Festival-collegium.pdf" (The French Hood – what it is and what it is not)
+- Link: https://frenchrenaissancecostume.com/wordpress/wp-content/uploads/2012/04/The-French-Hood-Festival-collegium.pdf
 
 Sample responses from POST /qa/ask:
 
