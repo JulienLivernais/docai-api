@@ -17,8 +17,8 @@ async def ask_and_get_answer(vector_store, query):
     )
 
     retriever = vector_store.as_retriever(
-        search_type='similarity_score_threshold',
-        search_kwargs={'score_threshold': 0.5, 'k': 5}
+        search_type='similarity',
+        search_kwargs={'k': 5}
     )
 
     prompt = ChatPromptTemplate.from_template("""

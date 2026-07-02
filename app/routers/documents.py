@@ -42,7 +42,7 @@ def upload_document(workspace_id: int,
     file_path = save_file_temporarily(file)
     data = load_document(file_path)
     chunks = chunk_data(data)
-    insert_or_fetch_embeddings(settings.PINECONE_INDEX_NAME, chunks)
+    insert_or_fetch_embeddings(settings.PINECONE_INDEX_NAME, chunks, workspace.pinecone_namespace)
     delete_file(file_path)
 
     # save document to DB

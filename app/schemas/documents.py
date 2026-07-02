@@ -10,7 +10,6 @@ class DocumentCreate(DocumentBase):
 class DocumentResponse(DocumentBase):
     id: int
     workspace_id: int
-    status: str
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)

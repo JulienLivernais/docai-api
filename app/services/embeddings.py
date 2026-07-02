@@ -20,36 +20,14 @@ def chunk_data(data, chunk_size=256): # create chunk document
     return chunks
 
 
-def insert_or_fetch_embeddings(index_name, chunks):
-    pc = pinecone.Pinecone(api_key=settings.PINECONE_API_KEY)
-
-    if index_name in pc.list_indexes().names:
-        logger.info(f"Loading {index_name} already exists. Loading embeddings...")
-        vector_store = PineconeVectorStore.from_existing_index(
-            index_name=index_name,
-            embedding=embeddings,
-        )
-
-    else:
-        logger.info(f'Creating index {index_name} and embeddings...')
-        pc.create_index(
-            name=index_name,
-            dimension=1536,
-            metric="cosine",
-            spec={
-                "serverless": {
-                    "cloud": "aws",
-                    "region": "us-east-1"
-                }
-            }
-        )
-
-        vector_store = PineconeVectorStore.from_documents(
-            chunks, embeddings,
-            index_name=index_name
-        )
-        logger.info("Index created and embeddings inserted successfully")
-
+def insert_or_fetch_embeddings(index_name, chunks, namespace):
+    vector_store = PineconeVectorStore.from_documents(
+        chunks,
+        embeddings,
+        index_name=index_name,
+        namespace=namespace
+    )
+    logger.info(f"Embeddings inserted in namespace {namespace}")
     return vector_store
 
 
@@ -58,7 +36,7 @@ def get_vector_store(index_name: str, namespace: str):
     embeddings = OpenAIEmbeddings(
         model="text-embedding-3-small",
         dimensions=1536,
-        api_key=settings.OPENAI_API_KEY
+        api_key=settings.OPENAI_KEY
     )
     return PineconeVectorStore.from_existing_index(
         index_name=index_name,
